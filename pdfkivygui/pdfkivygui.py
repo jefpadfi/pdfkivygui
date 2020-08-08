@@ -44,11 +44,25 @@ class Graph(BoxLayout):
         # if we have spacing lets use it.
         self.add_widget(self.figure.canvas)
 
-        # setup the labels
+    def draw(self, df):
+        # Let's clear the axes before we draw as we may be updating the content.
+        self.axes.clear()
+        # Let's draw the x and y labels for the graph
         self.axes.set_xlabel(self.x_label)
         self.axes.set_ylabel(self.y_label)
 
-    def redraw(self, df):
-
+        if self.show_grid:
+            self.axes.grid()
         self.axes.plot(df.iloc[:, 1].values,
                        df.iloc[:, 0].values)
+
+
+class HBarGraph(BoxLayout):
+    def __init__(self, **kwargs):
+        super(HBarGraph, self).__init__(**kwargs)
+        self.figure, self.axes = plt.subplots()
+        self.add_widget(self.figure.canvas)
+
+    def draw(self, df):
+        y_pos = np.arange(len[df.iloc[:, "people"]])
+        performance = df[]
