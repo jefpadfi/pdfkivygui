@@ -58,11 +58,24 @@ class Graph(BoxLayout):
 
 
 class HBarGraph(BoxLayout):
+    show_grid = BooleanProperty(True)
+    x_label = StringProperty("Time")
+    y_label = StringProperty("Dollars")
+
     def __init__(self, **kwargs):
         super(HBarGraph, self).__init__(**kwargs)
         self.figure, self.axes = plt.subplots()
         self.add_widget(self.figure.canvas)
 
     def draw(self, df):
-        y_pos = np.arange(len[df.iloc[:, "people"]])
-        performance = df[]
+        # Let's clear the axes before we draw as we may be updating the content.
+        self.axes.clear()
+        # Let's draw the x and y labels for the graph
+        self.axes.set_xlabel(self.x_label)
+        self.axes.set_ylabel(self.y_label)
+
+        if self.show_grid:
+            self.axes.grid()
+
+        self.axes.barh(df.iloc[:, 0], 1000, align='center')
+

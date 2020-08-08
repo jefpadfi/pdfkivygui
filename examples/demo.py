@@ -1,5 +1,5 @@
 from kivy.app import App
-from pdfkivygui.pdfkivygui import Graph
+from pdfkivygui.pdfkivygui import Graph, HBarGraph
 from kivy.uix.label import Label
 import pandas as pd
 
@@ -14,9 +14,12 @@ df = pd.DataFrame(pandas_data)
 
 class Example(App):
     def build(self):
-        graph_test = Graph()
-        graph_test.draw(df)
-        return graph_test
+        # graph_test = Graph()
+        # graph_test.draw(df)
+
+        hbar_test = HBarGraph()
+        hbar_test.draw(df)
+        return hbar_test
 
 
 if __name__ == "__main__":
