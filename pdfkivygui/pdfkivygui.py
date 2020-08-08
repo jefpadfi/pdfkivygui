@@ -57,13 +57,19 @@ class Graph(BoxLayout):
                        df.iloc[:, 0].values)
 
 
-class HBarGraph(BoxLayout):
-    show_grid = BooleanProperty(True)
+class BarGraph(BoxLayout):
+    show_grid = BooleanProperty(False)
+
     x_label = StringProperty("Time")
     y_label = StringProperty("Dollars")
 
+    hbar_width = NumericProperty()
+
+    x_tick_labels = ListProperty([])
+    y_tick_labels = StringProperty("")
+
     def __init__(self, **kwargs):
-        super(HBarGraph, self).__init__(**kwargs)
+        super(BarGraph, self).__init__(**kwargs)
         self.figure, self.axes = plt.subplots()
         self.add_widget(self.figure.canvas)
 
@@ -72,10 +78,12 @@ class HBarGraph(BoxLayout):
         self.axes.clear()
         # Let's draw the x and y labels for the graph
         self.axes.set_xlabel(self.x_label)
+        self.axes.set_xticklabels(self.x_tick_labels)
+
         self.axes.set_ylabel(self.y_label)
+        # self.axes.set_yticklabels(self.y_tick_labels)
 
         if self.show_grid:
             self.axes.grid()
-
-        self.axes.barh(df.iloc[:, 0], 1000, align='center')
+        self.axes.bar(self.x_tick_labels, df.iloc[:, 0].values, align='center')
 
