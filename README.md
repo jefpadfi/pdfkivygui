@@ -6,7 +6,6 @@ was created by bluenote10. After 24 hours of working and modifying my original f
 library. Thus pdfkivygui was born.
 
 ## Features
-* Uses a Kivy widget instead of dedicated layouts
 * Enables properties so you can customize the graph without having to touch source code.
 * Will be packaged up and put up on PyPI for easy install into any project.
 
