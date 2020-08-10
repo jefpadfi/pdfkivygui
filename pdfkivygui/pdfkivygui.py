@@ -87,3 +87,5 @@ class BarGraph(BoxLayout):
             self.axes.grid()
         self.axes.bar(self.x_tick_labels, df.iloc[:, 0].values, align='center')
 
+
+
