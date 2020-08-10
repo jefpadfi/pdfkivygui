@@ -1,4 +1,4 @@
-'''
+"""
 Backend Kivy
 =====
 
@@ -234,7 +234,7 @@ is released, `motion_notify_event` which is raised when the mouse is on motion,
     fig.canvas.mpl_connect('figure_leave_event', figure_leave)
     fig.canvas.mpl_connect('close_event', close)
 
-'''
+"""
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
@@ -298,7 +298,7 @@ import textwrap
 import uuid
 import numbers
 
-kivy.require('1.9.1')
+kivy.require('1.11.0') # We are using 1.11. So we will require 1.11
 
 toolbar = None
 my_canvas = None
@@ -311,9 +311,8 @@ class SaveDialog(FloatLayout):
 
 
 class MPLKivyApp(App):
-    '''Creates the App initializing a FloatLayout with a figure and toolbar
-       widget.
-    '''
+    """ Creates the App initializing a FloatLayout with a figure and toolbar
+       widget. """
     figure = ObjectProperty(None)
     toolbar = ObjectProperty(None)
 
@@ -330,8 +329,7 @@ class MPLKivyApp(App):
 
 
 def draw_if_interactive():
-    '''Handle whether or not the backend is in interactive mode or not.
-    '''
+    """ Handle whether or not the backend is in interactive mode or not. """
     if matplotlib.is_interactive():
         figManager = Gcf.get_active()
         if figManager:
@@ -339,9 +337,8 @@ def draw_if_interactive():
 
 
 class Show(ShowBase):
-    '''mainloop needs to be overwritten to define the show() behavior for kivy
-       framework.
-    '''
+    """ mainloop needs to be overwritten to define the show() behavior for kivy
+       framework. """
 
     def mainloop(self):
         app = App.get_running_app()
@@ -354,8 +351,7 @@ show = Show()
 
 
 def new_figure_manager(num, *args, **kwargs):
-    '''Create a new figure manager instance for the figure given.
-    '''
+    """ Create a new figure manager instance for the figure given. """
     # if a main-level app must be created, this (and
     # new_figure_manager_given_figure) is the usual place to
     # do it -- see backend_wx, backend_wxagg and backend_tkagg for
@@ -367,8 +363,7 @@ def new_figure_manager(num, *args, **kwargs):
 
 
 def new_figure_manager_given_figure(num, figure):
-    '''Create a new figure manager instance for the given figure.
-    '''
+    """ Create a new figure manager instance for the given figure. """
     canvas = FigureCanvasKivy(figure)
     manager = FigureManagerKivy(canvas, num)
     global my_canvas
@@ -379,14 +374,13 @@ def new_figure_manager_given_figure(num, figure):
 
 
 class RendererKivy(RendererBase):
-    '''The kivy renderer handles drawing/rendering operations. A RendererKivy
-       should be initialized with a FigureCanvasKivy widget. On initialization
-       a MathTextParser is instantiated to generate math text inside a
-       FigureCanvasKivy widget. Additionally a list to store clip_rectangles
-       is defined for elements that need to be clipped inside a rectangle such
-       as axes. The rest of the render is performed using kivy graphics
-       instructions.
-    '''
+    """ The kivy renderer handles drawing/rendering operations. A RendererKivy
+        should be initialized with a FigureCanvasKivy widget. On initialization
+        a MathTextParser is instantiated to generate math text inside a
+        FigureCanvasKivy widget. Additionally a list to store clip_rectangles
+        is defined for elements that need to be clipped inside a rectangle such
+        as axes. The rest of the render is performed using kivy graphics
+        instructions. """
 
     def __init__(self, widget):
         super(RendererKivy, self).__init__()
@@ -400,9 +394,8 @@ class RendererKivy(RendererBase):
         self.labels_inside_plot = []
 
     def contains(self, widget, x, y):
-        '''Returns whether or not a point is inside the widget. The value
-           of the point is defined in x, y as kivy coordinates.
-        '''
+        """ Returns whether or not a point is inside the widget. The value
+            of the point is defined in x, y as kivy coordinates. """
         left = widget.x
         bottom = widget.y
         top = widget.y + widget.height
@@ -411,13 +404,12 @@ class RendererKivy(RendererBase):
                 bottom <= y <= top)
 
     def handle_clip_rectangle(self, gc, x, y):
-        '''It checks whether the point (x,y) collides with any already
-           existent stencil. If so it returns the index position of the
-           stencil it collides with. if the new clip rectangle bounds are
-           None it draws in the canvas otherwise it finds the correspondent
-           stencil or creates a new one for the new graphics instructions.
-           The point x,y is given in matplotlib coordinates.
-        '''
+        """ It checks whether the point (x,y) collides with any already
+            existent stencil. If so it returns the index position of the
+            stencil it collides with. if the new clip rectangle bounds are
+            None it draws in the canvas otherwise it finds the correspondent
+            stencil or creates a new one for the new graphics instructions.
+            The point x,y is given in matplotlib coordinates. """
         x = self.widget.x + x
         y = self.widget.y + y
         collides = self.collides_with_existent_stencil(x, y)
@@ -444,14 +436,13 @@ class RendererKivy(RendererBase):
                              offsets, offsetTrans, facecolors, edgecolors,
                              linewidths, linestyles, antialiaseds, urls,
                              offset_position):
-        '''Draws a collection of paths selecting drawing properties from
-           the lists *facecolors*, *edgecolors*, *linewidths*,
-           *linestyles* and *antialiaseds*. *offsets* is a list of
-           offsets to apply to each of the paths. The offsets in
-           *offsets* are first transformed by *offsetTrans* before being
-           applied.  *offset_position* may be either "screen" or "data"
-           depending on the space that the offsets are in.
-        '''
+        """ Draws a collection of paths selecting drawing properties from
+            the lists *facecolors*, *edgecolors*, *linewidths*,
+            *linestyles* and *antialiaseds*. *offsets* is a list of
+            offsets to apply to each of the paths. The offsets in
+            *offsets* are first transformed by *offsetTrans* before being
+            applied.  *offset_position* may be either "screen" or "data"
+            depending on the space that the offsets are in. """
         len_path = len(paths[0].vertices) if len(paths) > 0 else 0
         uses_per_path = self._iter_collection_uses_per_path(
             paths, all_transforms, offsets, facecolors, edgecolors)
@@ -491,9 +482,8 @@ class RendererKivy(RendererBase):
                 widget.canvas.add(PopMatrix())
 
     def collides_with_existent_stencil(self, x, y):
-        '''Check all the clipareas and returns the index of the clip area that
-           contains this point. The point x, y is given in kivy coordinates.
-        '''
+        """ Check all the clipareas and returns the index of the clip area that
+            contains this point. The point x, y is given in kivy coordinates. """
         idx = -1
         for cliparea in self.clip_rectangles:
             idx += 1
@@ -502,9 +492,8 @@ class RendererKivy(RendererBase):
         return -1
 
     def get_path_instructions(self, gc, polygons, closed=False, rgbFace=None):
-        '''With a graphics context and a set of polygons it returns a list
-           of InstructionGroups required to render the path.
-        '''
+        """ With a graphics context and a set of polygons it returns a list
+            of InstructionGroups required to render the path. """
         instructions_list = []
         points_line = []
         for polygon in polygons:
@@ -529,9 +518,8 @@ class RendererKivy(RendererBase):
         return instructions_list
 
     def get_graphics(self, gc, polygons, points_line, rgbFace, closed=False):
-        '''Return an instruction group which contains the necessary graphics
-           instructions to draw the respective graphics.
-        '''
+        """ Return an instruction group which contains the necessary graphics
+            instructions to draw the respective graphics. """
         instruction_group = InstructionGroup()
         if isinstance(gc.line['dash_list'], tuple):
             gc.line['dash_list'] = list(gc.line['dash_list'])
@@ -559,11 +547,10 @@ class RendererKivy(RendererBase):
         return instruction_group
 
     def draw_image(self, gc, x, y, im):
-        '''Render images that can be displayed on a matplotlib figure.
-           These images are generally called using imshow method from pyplot.
-           A Texture is applied to the FigureCanvas. The position x, y is
-           given in matplotlib coordinates.
-        '''
+        """ Render images that can be displayed on a matplotlib figure.
+            These images are generally called using imshow method from pyplot.
+            A Texture is applied to the FigureCanvas. The position x, y is
+            given in matplotlib coordinates. """
         # Clip path to define an area to mask.
         clippath, clippath_trans = gc.get_clip_path()
         # Normal coordinates calculated and image added.
@@ -603,13 +590,12 @@ class RendererKivy(RendererBase):
                 widget.canvas.add(StencilPop())
 
     def draw_text(self, gc, x, y, s, prop, angle, ismath=False, mtext=None):
-        '''Render text that is displayed in the canvas. The position x, y is
-           given in matplotlib coordinates. A `GraphicsContextKivy` is given
-           to render according to the text properties such as color, size, etc.
-           An angle is given to change the orientation of the text when needed.
-           If the text is a math expression it will be rendered using a
-           MathText parser.
-        '''
+        """ Render text that is displayed in the canvas. The position x, y is
+            given in matplotlib coordinates. A `GraphicsContextKivy` is given
+            to render according to the text properties such as color, size, etc.
+            An angle is given to change the orientation of the text when needed.
+            If the text is a math expression it will be rendered using a
+            MathText parser. """
         if mtext:
             transform = mtext.get_transform()
             ax, ay = transform.transform_point(mtext.get_position())
@@ -673,9 +659,8 @@ class RendererKivy(RendererBase):
                               size=plot_text.texture.size)
 
     def draw_mathtext(self, gc, x, y, s, prop, angle):
-        '''Draw the math text using matplotlib.mathtext. The position
-           x,y is given in Kivy coordinates.
-        '''
+        """ Draw the math text using matplotlib.mathtext. The position
+            x,y is given in Kivy coordinates. """
         ftimage, depth = self.mathtext_parser.parse(s, self.dpi, prop)
         w = ftimage.get_width()
         h = ftimage.get_height()
@@ -691,13 +676,12 @@ class RendererKivy(RendererBase):
             Rectangle(texture=texture, pos=(x, y), size=(w, h))
 
     def draw_path(self, gc, path, transform, rgbFace=None):
-        '''Produce the rendering of the graphics elements using
-           :class:`kivy.graphics.Line` and :class:`kivy.graphics.Mesh` kivy
-           graphics instructions. The paths are converted into polygons and
-           assigned either to a clip rectangle or to the same canvas for
-           rendering. Paths are received in matplotlib coordinates. The
-           aesthetics is defined by the `GraphicsContextKivy` gc.
-        '''
+        """ Produce the rendering of the graphics elements using
+            :class:`kivy.graphics.Line` and :class:`kivy.graphics.Mesh` kivy
+            graphics instructions. The paths are converted into polygons and
+            assigned either to a clip rectangle or to the same canvas for
+            rendering. Paths are received in matplotlib coordinates. The
+            aesthetics is defined by the `GraphicsContextKivy` gc. """
         if _mpl_ge_2_0:
             polygons = path.to_polygons(transform, self.widget.width,
                                         self.widget.height, closed_only=False)
@@ -711,11 +695,10 @@ class RendererKivy(RendererBase):
 
     def draw_markers(self, gc, marker_path, marker_trans, path,
                      trans, rgbFace=None):
-        '''Markers graphics instructions are stored on a dictionary and
-           hashed through graphics context and rgbFace values. If a marker_path
-           with the corresponding graphics context exist then the instructions
-           are pulled from the markers dictionary.
-        '''
+        """ Markers graphics instructions are stored on a dictionary and
+            hashed through graphics context and rgbFace values. If a marker_path
+            with the corresponding graphics context exist then the instructions
+            are pulled from the markers dictionary. """
         if not len(path.vertices):
             return
         # get a string representation of the path
@@ -763,15 +746,13 @@ class RendererKivy(RendererBase):
             return _path.convert_to_svg(path, transform, clip, simplify, 6)
 
     def get_canvas_width_height(self):
-        '''Get the actual width and height of the widget.
-        '''
+        """ Get the actual width and height of the widget. """
         return self.widget.width, self.widget.height
 
     def get_text_width_height_descent(self, s, prop, ismath):
-        '''This method is needed specifically to calculate text positioning
-           in the canvas. Matplotlib needs the size to calculate the points
-           according to their layout
-        '''
+        """ This method is needed specifically to calculate text positioning
+            in the canvas. Matplotlib needs the size to calculate the points
+            according to their layout """
         if ismath:
             ftimage, depth = self.mathtext_parser.parse(s, self.dpi, prop)
             w = ftimage.get_width()
@@ -788,16 +769,14 @@ class RendererKivy(RendererBase):
         return plot_text.texture.size[0], plot_text.texture.size[1], 1
 
     def new_gc(self):
-        '''Instantiate a GraphicsContextKivy object
-        '''
+        """ Instantiate a GraphicsContextKivy object """
         return GraphicsContextKivy(self.widget)
 
     def points_to_pixels(self, points):
         return points / 72.0 * self.dpi
 
     def weight_as_number(self, weight):
-        """ Replaces the deprecated matplotlib function of the same name
-        """
+        """ Replaces the deprecated matplotlib function of the same name """
         # Return if number
         if isinstance(weight, numbers.Number):
             return weight
