@@ -13,8 +13,9 @@ Thus pdfkivygui was born.
 
 
 ## Docs and Screenshots
-Coming Soon...
+![Bar Graph](https://raw.githubusercontent.com/jefpadfi/pdfkivygui/master/examples/screenshots/bar-graph.png)
 
+![Line Graph](https://raw.githubusercontent.com/jefpadfi/pdfkivygui/master/examples/screenshots/line_graph.png)
 ## Installation
 Until a stable version is created you can install via pip install from this repo. Please note that until a release is 
 created the package may be unstable.
