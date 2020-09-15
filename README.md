@@ -1,4 +1,4 @@
-[![Documentation Status](https://readthedocs.org/projects/pdfkivygui/badge/?version=latest)](https://pdfkivygui.readthedocs.io/en/latest/?badge=latest)
+
 # pdfkivygui
 Pandas Dataframe Kivy Gui (pdfkivygui) is a Python package that allows you to use Pandas Dataframe with 
 matplotlib in a custom kivy widget. I started with a fork of 
@@ -13,6 +13,8 @@ Thus pdfkivygui was born.
 
 
 ## Docs and Screenshots
+Documentation can be found [here](https://jefpadfi.github.io/pdfkivygui/)
+
 ![Bar Graph](https://raw.githubusercontent.com/jefpadfi/pdfkivygui/master/examples/screenshots/bar-graph.png)
 
 ![Line Graph](https://raw.githubusercontent.com/jefpadfi/pdfkivygui/master/examples/screenshots/line_graph.png)
