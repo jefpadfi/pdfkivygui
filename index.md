@@ -5,4 +5,5 @@ in a custom kivy widget. I started with a fork of PandasDataframeGuiKivy created
 PandasDataFrameGui which was created by bluenote10. After 24 hours of working and modifying my original fork, I decided \
 to recreate the entire library. Thus pdfkivygui was born.
 
-[Bar Graph of Pandas Dataframe Kivy Gui Library](basics.md)
+[Bar Graph of Pandas Dataframe Kivy Gui Library](bar_graph.md)
+[Line Graph of Pandas Dataframe Kivy Gui Library](line_graph.md)
