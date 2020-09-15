@@ -14,15 +14,15 @@ df = pd.DataFrame(pandas_data)
 
 class Example(App):
     def build(self):
-        # graph_test = Graph()
-        # graph_test.draw(df)
+        graph_test = Graph()
+        graph_test.draw(df)
 
-        bar_test = BarGraph()
-        bar_test.x_tick_labels = test_time
+        # bar_test = BarGraph()
+        # bar_test.x_tick_labels = test_time
 
-        bar_test.draw(df)
+        graph_test.draw(df)
 
-        return bar_test
+        return graph_test
 
 
 if __name__ == "__main__":
