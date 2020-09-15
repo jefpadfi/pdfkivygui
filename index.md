@@ -6,4 +6,5 @@ PandasDataFrameGui which was created by bluenote10. After 24 hours of working an
 to recreate the entire library. Thus pdfkivygui was born.
 
 [Bar Graph of Pandas Dataframe Kivy Gui Library](bar_graph.md)
+
 [Line Graph of Pandas Dataframe Kivy Gui Library](line_graph.md)
